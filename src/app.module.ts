@@ -1,8 +1,5 @@
 import { Module } from '@nestjs/common';
-import { CreateModuleModule } from './create-module/create-module.module';
-import { ReadModuleModule } from './read-module/read-module.module';
-import { UpdateMolduleModule } from './update-moldule/update-moldule.module';
-import { DeleteModuleModule } from './delete-module/delete-module.module';
+import { PersonModule } from './person-module/person.module';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 
@@ -12,10 +9,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     isGlobal : true
   }),
   MongooseModule.forRoot(process.env.DB_ACCES),
-  CreateModuleModule, 
-  ReadModuleModule, 
-  UpdateMolduleModule, 
-  DeleteModuleModule
+  PersonModule
 ]
 })
 export class AppModule {}
