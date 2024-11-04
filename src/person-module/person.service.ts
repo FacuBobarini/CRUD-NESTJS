@@ -10,10 +10,24 @@ import { createPerson } from "./interface/person.interface";
 export class PersonService {
   constructor (@InjectModel(Person.name) private personModel: Model<Person>){}
 
-  async addNewPerson(person:CreatePersonDTO):Promise<createPerson>{
+  addNewPerson(person:CreatePersonDTO):Promise<createPerson>{
 
     return new this.personModel(person).save()
-}
+  }
+
+  findAllPeople():Promise<createPerson[]>{
+
+    return  this.personModel.find()
+  }
+  
+  findPersonById(id: string):Promise<createPerson | null>{
+
+    return  this.personModel.findById(id)
+  }
+
+  removePerson(id: string):Promise<createPerson | null>{
+    return this.personModel.findOneAndDelete({_id: id}).exec()
+  }
 
     
 }
