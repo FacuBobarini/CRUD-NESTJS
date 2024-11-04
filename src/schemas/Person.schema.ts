@@ -10,19 +10,19 @@ export class Person {
       required: true,
       type: String,
   })
-  name: String;
+  name: string;
 
   @Prop({
       required: true,
       type: String,
   })
-  lastName: String;
+  lastName: string;
 
   @Prop({
       required: true,
       type: Number,     
   })
-  dni: Number
+  dni: number
 }
 
 const PersonSchema =  SchemaFactory.createForClass(Person)
