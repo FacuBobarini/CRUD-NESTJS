@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { Person } from "src/schemas/Person.schema";
-import { CreatePersonDTO } from "./dto/person.dto";
+import { CreatePersonDTO, UpdatepersonDTO } from "./dto/person.dto";
 import { createPerson } from "./interface/person.interface";
 
 
@@ -29,5 +29,8 @@ export class PersonService {
     return this.personModel.findOneAndDelete({_id: id}).exec()
   }
 
+  findAndUpdatePerson(id: string , personUpdate: UpdatepersonDTO){
+    return this.personModel.findByIdAndUpdate(id, personUpdate)
+}
     
 }
