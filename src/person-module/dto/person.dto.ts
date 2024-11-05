@@ -4,3 +4,9 @@ export class CreatePersonDTO{
   lastName: string;
   dni: number;
 }
+
+export class UpdatepersonDTO{
+  name?: string;
+  lastName?: string;
+  dni?: number;
+}
