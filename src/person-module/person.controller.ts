@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common"
+import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common"
 import { PersonService } from "./person.service"
 import { CreatePersonDTO } from "./dto/person.dto"
 import { createPerson } from "./interface/person.interface"
@@ -42,5 +42,15 @@ export class PersonController {
       } catch(error){
         return error
       }
+    }
+
+    @Patch(':id')
+    async updatePerson(@Param('id') id: string,@Body()body: any):Promise<createPerson>{
+        try{
+            return await this.personService.findAndUpdatePerson(id,body)
+        }
+        catch(error){
+          return error
+        }
     }
 }
