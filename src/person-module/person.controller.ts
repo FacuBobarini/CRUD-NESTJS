@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common"
 import { PersonService } from "./person.service"
-import { CreatePersonDTO } from "./dto/person.dto"
-import { createPerson } from "./interface/person.interface"
+import { CreatePersonDTO, UpdatepersonDTO } from "./dto/person.dto"
+import { PersonInterface, ResponsePersonInterface } from "./interface/person.interface"
 
 @Controller('person')
 export class PersonController {
@@ -9,48 +9,62 @@ export class PersonController {
     constructor (private personService: PersonService){}
 
     @Post()
-    async createPerson(@Body()body:CreatePersonDTO):Promise<createPerson>{
+    async createPerson(@Body()body:CreatePersonDTO): Promise<ResponsePersonInterface>{
       try{
-        return await this.personService.addNewPerson(body)
+        const newPerson:PersonInterface = await this.personService.addNewPerson(body)
+
+        return {status: 'success', person: newPerson}
+
       }catch(error){
-        return error
+        return {status: 'failed', message: error}
       }
     }
 
     @Get()
-    async getAllPeople():Promise<createPerson[]>{
+    async getAllPeople(): Promise<ResponsePersonInterface>{
       try{
-        return await this.personService.findAllPeople()
+        const personResult:PersonInterface[] = await this.personService.findAllPeople()
+
+        return {status: 'success', people: personResult}
+
       } catch(error){
-        return error
+        return {status: 'failed', message: error}
       }
     }
 
     @Get(':id')
-    async getPersonById(@Param('id') id: string):Promise<createPerson>{
+    async getPersonById(@Param('id') id: string): Promise<ResponsePersonInterface>{
       try{
-        return await this.personService.findPersonById(id)
+        const personResult: PersonInterface = await this.personService.findPersonById(id)
+
+        return {status: 'success', person: personResult}
+
       } catch(error){
-        return error
+        return {status: 'failed', message: error}
       }
     }
 
     @Delete(':id')
-    async deletePerson(@Param('id') id: string):Promise<createPerson|null>{
+    async deletePerson(@Param('id') id: string): Promise<ResponsePersonInterface>{
       try{
-        return await this.personService.removePerson(id)
+        const deletedPerson: PersonInterface = await this.personService.removePerson(id)
+
+        return {status: 'success', person: deletedPerson} 
+
       } catch(error){
-        return error
+        return {status: 'failed', message: error}
       }
     }
 
     @Patch(':id')
-    async updatePerson(@Param('id') id: string,@Body()body: any):Promise<createPerson>{
+    async updatePerson(@Param('id') id: string,@Body()body: UpdatepersonDTO): Promise<ResponsePersonInterface>{
         try{
-            return await this.personService.findAndUpdatePerson(id,body)
+          const updatedPerson: PersonInterface = await this.personService.findAndUpdatePerson(id,body)
+
+          return {status: 'success', person: updatedPerson}
         }
         catch(error){
-          return error
+          return {status: 'failed', message: error}
         }
     }
 }
